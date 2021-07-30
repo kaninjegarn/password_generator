@@ -67,12 +67,21 @@ const PasswordGen = () => {
         <button onClick={changeSize} value={16}>16</button>
       </div>
       <div>
-        <label htmlFor="caps">Want both upper/lower case?</label>
-        <input type="checkbox" name="caps" value={includeCaps} checked={includeCaps} onChange={handleCaps}/>
-        <label htmlFor="numbers">Want to include numbers?</label>
-        <input type="checkbox" name="numbers" value={includeNumbers} checked={includeNumbers} onChange={handleNumbers}/>
-        <label htmlFor="otherSymbols">Want to include other symbols?</label>
-        <input type="checkbox" name="otherSymbols" value={includeSymbols} checked={includeSymbols} onChange={handleSymbols} />
+        <div>
+          <label htmlFor="caps">Want both upper/lower case?</label>
+          <input type="checkbox" name="caps" value={includeCaps} checked={includeCaps} onChange={handleCaps}/>
+          <label htmlFor="caps">eg: ABC</label>
+        </div>
+        <div>
+          <label htmlFor="numbers">Want to include numbers?</label>
+          <input type="checkbox" name="numbers" value={includeNumbers} checked={includeNumbers} onChange={handleNumbers}/>
+          <label htmlFor="numbers">eg: 1,2,3</label>
+        </div>
+        <div>
+          <label htmlFor="otherSymbols">Want to include other symbols?</label>
+          <input type="checkbox" name="otherSymbols" value={includeSymbols} checked={includeSymbols} onChange={handleSymbols} />
+          <label htmlFor="otherSymbols">eg: / § - : ;</label>
+        </div>
       </div>
       <h1>{passwordSize}</h1>
       <button onClick={handleClick}>Click me</button>
