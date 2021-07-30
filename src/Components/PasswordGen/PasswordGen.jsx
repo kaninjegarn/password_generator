@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import './PasswordGen.scss';
+import { checkIfAllTrue } from '../../helpers';
 
 const PasswordGen = () => {
   const [generatedPassword, setGeneratedPassword] = useState();
-  const [passwordSize, setPasswordSize] = useState();
+  const [passwordSize, setPasswordSize] = useState(10);
   const [includeCaps, setIncludeCaps] = useState(false);
   const [includeNumbers, setIncludeNumbers] = useState(false);
   const [includeSymbols, setIncludeSymbols] = useState(false);
@@ -22,21 +24,33 @@ const PasswordGen = () => {
   const otherSymbols = ["/", "-", ".", ",", ":", ";", "§", "'"];
 
   // Create an array with all the arrays above as one.
-  const fullArr = alphabet.concat(res, numbers, otherSymbols)
-  console.log(fullArr)
+  // const fullArr = alphabet.concat(res, numbers, otherSymbols)
+  // console.log(fullArr)
+
+  
 
   // Get a random value from the full array
   const handleClick = () => {
-    // TODO fix the function that checks if all true
-    const fullArr = alphabet.concat(res, numbers, otherSymbols)
+    var fullArr;
+    if (checkIfAllTrue(includeCaps, includeNumbers, includeSymbols)) {
+      fullArr = alphabet.concat(res, numbers, otherSymbols)
+      const random = Math.floor(Math.random() * fullArr.length);
+      console.log(Array.from({ length: passwordSize }, () => fullArr[random]))
+      console.log(fullArr)
+    }
 
-    const random = Math.floor(Math.random() * fullArr.length);
-    console.log(random, fullArr[random]);
+
+    // TODO fix the function that checks if all true
+    // const fullArr = alphabet.concat(res, numbers, otherSymbols)
+
+    // const random = Math.floor(Math.random() * fullArr.length);
+    // console.log(random, fullArr[random]);
+    // console.log(checkIfAllTrue(includeCaps, includeNumbers, includeSymbols))
   }
 
   // Function that will set the length of the generated passwords array.
   const changeSize = (event) => {
-    setPasswordSize(event.target.value)
+    setPasswordSize(parseInt(event.target.getAttribute('size')))
   }
 
   // Function that handles the checkbox for caps
@@ -59,32 +73,36 @@ const PasswordGen = () => {
     <div>
       <h1>Password Generator</h1>
       <h4>Size of your password</h4>
-      <div>
-        <button onClick={changeSize} value={8}>8</button>
-        <button onClick={changeSize} value={10}>10</button>
-        <button onClick={changeSize} value={12}>12</button>
-        <button onClick={changeSize} value={14}>14</button>
-        <button onClick={changeSize} value={16}>16</button>
+      <div className="passwordSize">
+        <div onClick={changeSize} size={8}>8</div>
+        <div onClick={changeSize} size={10}>10</div>
+        <div onClick={changeSize} size={12}>12</div>
+        <div onClick={changeSize} size={14}>14</div>
+        <div onClick={changeSize} size={16}>16</div>
       </div>
-      <div>
+      <div className="container">
         <div>
-          <label htmlFor="caps">Want both upper/lower case?</label>
-          <input type="checkbox" name="caps" value={includeCaps} checked={includeCaps} onChange={handleCaps}/>
-          <label htmlFor="caps">eg: ABC</label>
+          <div className="condition">
+            <label htmlFor="caps">Want both upper/lower case?</label>
+            <input type="checkbox" name="caps" value={includeCaps} checked={includeCaps} onChange={handleCaps}/>
+            <label className="helpText" htmlFor="caps">eg: ABC</label>
+          </div>
+          <div className="condition">
+            <label htmlFor="numbers">Want to include numbers?</label>
+            <input type="checkbox" name="numbers" value={includeNumbers} checked={includeNumbers} onChange={handleNumbers}/>
+            <label className="helpText" htmlFor="numbers">eg: 1,2,3</label>
+          </div>
+          <div className="condition">
+            <label htmlFor="otherSymbols">Want to include other symbols?</label>
+            <input type="checkbox" name="otherSymbols" value={includeSymbols} checked={includeSymbols} onChange={handleSymbols} />
+            <label className="helpText" htmlFor="otherSymbols">eg: / § - : ;</label>
+          </div>
         </div>
-        <div>
-          <label htmlFor="numbers">Want to include numbers?</label>
-          <input type="checkbox" name="numbers" value={includeNumbers} checked={includeNumbers} onChange={handleNumbers}/>
-          <label htmlFor="numbers">eg: 1,2,3</label>
-        </div>
-        <div>
-          <label htmlFor="otherSymbols">Want to include other symbols?</label>
-          <input type="checkbox" name="otherSymbols" value={includeSymbols} checked={includeSymbols} onChange={handleSymbols} />
-          <label htmlFor="otherSymbols">eg: / § - : ;</label>
+        <div className="btnContainer">
+          <div className="btn-confirm" onClick={handleClick}>Generate Password</div>
         </div>
       </div>
       <h1>{passwordSize}</h1>
-      <button onClick={handleClick}>Click me</button>
     </div>
   )
 }
