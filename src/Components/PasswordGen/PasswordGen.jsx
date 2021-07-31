@@ -11,6 +11,7 @@ const PasswordGen = () => {
 
   // Create array with the alphabet
   const alpha = Array.from(Array(26)).map((e, index) => index + 65);
+  // console.log(alpha)
   const alphabet = alpha.map((item) => String.fromCharCode(item));
 
   // Create an array that contains lower case alphabet.
@@ -23,29 +24,18 @@ const PasswordGen = () => {
   // Create array with strange symbols
   const otherSymbols = ["/", "-", ".", ",", ":", ";", "§", "'"];
 
-  // Create an array with all the arrays above as one.
-  // const fullArr = alphabet.concat(res, numbers, otherSymbols)
-  // console.log(fullArr)
-
-  
-
   // Get a random value from the full array
   const handleClick = () => {
-    var fullArr;
     if (checkIfAllTrue(includeCaps, includeNumbers, includeSymbols)) {
-      fullArr = alphabet.concat(res, numbers, otherSymbols)
-      const random = Math.floor(Math.random() * fullArr.length);
-      console.log(Array.from({ length: passwordSize }, () => fullArr[random]))
-      console.log(fullArr)
+      let fullArr = alphabet.concat(res, numbers, otherSymbols)
+      const tempNewPassword = Array.from({ length: passwordSize });
+      
+      tempNewPassword.forEach(function (part, index, theArray) {
+        const foundIndex = Math.floor(Math.random() * fullArr.length);
+        theArray[index] = fullArr[foundIndex];
+      });
+      setGeneratedPassword(tempNewPassword)
     }
-
-
-    // TODO fix the function that checks if all true
-    // const fullArr = alphabet.concat(res, numbers, otherSymbols)
-
-    // const random = Math.floor(Math.random() * fullArr.length);
-    // console.log(random, fullArr[random]);
-    // console.log(checkIfAllTrue(includeCaps, includeNumbers, includeSymbols))
   }
 
   // Function that will set the length of the generated passwords array.
@@ -102,6 +92,9 @@ const PasswordGen = () => {
           <div className="btn-confirm" onClick={handleClick}>Generate Password</div>
         </div>
       </div>
+      {generatedPassword && generatedPassword.length > 0 &&
+        <h1>{generatedPassword}</h1>
+      }
       <h1>{passwordSize}</h1>
     </div>
   )
