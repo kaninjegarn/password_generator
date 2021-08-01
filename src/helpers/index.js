@@ -1,2 +1,2 @@
 export { default as checkIfAllTrue } from "./checkIfAllTrue";
-export { default as checkWhichIsTrue } from "./checkWhichIsTrue";
+export { default as generatePassword } from "./generatePassword";
