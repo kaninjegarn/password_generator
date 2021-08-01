@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import './PasswordGen.scss';
 import { checkIfAllTrue, generatePassword } from '../../helpers';
-// import { CopyToClipboard } from 'react-copy-to-clipboard';
 import copy from 'copy-to-clipboard';
 
 const PasswordGen = () => {
